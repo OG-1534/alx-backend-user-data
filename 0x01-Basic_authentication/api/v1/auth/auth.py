@@ -5,6 +5,7 @@
 from flask import request
 from typing import List, TypeVar
 
+
 class Auth:
     """Class that manages API authentication
     """
@@ -20,4 +21,3 @@ class Auth:
     def current_user(self, request=None) -> TypeVar('User'):
         """ Retrieves the current user from the request """
         return None
-
