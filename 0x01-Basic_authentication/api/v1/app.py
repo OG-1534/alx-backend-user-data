@@ -18,6 +18,7 @@ if os.getenv('AUTH_TYPE') == 'auth':
     from api.v1.auth.auth import Auth
     auth = Auth()
 
+
 @app.errorhandler(404)
 def not_found(error) -> str:
     """ Not found handler
@@ -43,7 +44,9 @@ def forbidden(error) -> str:
 def before_request():
     """Authentication of user before processing request
     """
-    excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+    excluded_paths = ['/api/v1/status/',
+                      '/api/v1/unauthorized/',
+                      '/api/v1/forbidden/']
 
     if auth:
         if not auth.require_auth(request.path, excluded_paths):
