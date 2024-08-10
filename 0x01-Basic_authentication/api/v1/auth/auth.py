@@ -12,19 +12,17 @@ class Auth:
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """ Checks if endpoint requires authentication """
-
-        if path is None:
-            return True
-        if excluded_paths is None or len(excluded_paths) == 0:
+        if path is None or excluded_paths is None or not excluded_paths:
             return True
 
-        # Ensure path ends with a slash
-        if path[-1] != '/':
-            path += '/'
+        path = path if path.endswith('/') else f"{path}/"
 
-        # Ensure path is in excluded_paths
-        if path in excluded_paths:
-            return False
+        for pattern in excluded_paths:
+            if pattern.endswith('*'):
+                if path.startswith(pattern[:-1]):
+                    return False
+            elif path == pattern or path == f"{pattern}/":
+                return False
 
         return True
 
