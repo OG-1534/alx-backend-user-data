@@ -11,6 +11,7 @@ from typing import TypeVar, Tuple, Optional
 class BasicAuth(Auth):
     """ BasicAuth class that inheriting from Auth. """
 
+    pass
     def extract_base64_authorization_header(
             self,
             authorization_header: str) -> str:
