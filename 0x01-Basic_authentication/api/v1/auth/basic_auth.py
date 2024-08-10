@@ -3,9 +3,9 @@
 """
 
 import base64
-from models.user import User
-from typing import Tuple, Optional
 from api.v1.auth.auth import Auth
+from models.user import User
+from typing import TypeVar, Tuple, Optional
 
 
 class BasicAuth(Auth):
@@ -63,8 +63,10 @@ class BasicAuth(Auth):
         return email, password
 
     def user_object_from_credentials(
-            self, user_email: str, user_pwd: str
-            ) -> Optional[TypeVar('User')]:
+            self,
+            user_email: str,
+            user_pwd: str
+            ) -> TypeVar('User'):
         """
         Retrieves the User instance based on email and password.
         """
