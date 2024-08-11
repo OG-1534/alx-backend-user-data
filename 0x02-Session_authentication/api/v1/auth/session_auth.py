@@ -49,7 +49,7 @@ class SessionAuth(Auth):
         return User.get(user_id)
 
     def create_session_view():
-    """ Handle POST /api/v1/auth_session/login """
+        """ Handle POST /api/v1/auth_session/login """
     email = request.form.get('email')
     password = request.form.get('password')
 
@@ -80,3 +80,19 @@ class SessionAuth(Auth):
     response.set_cookie(cookie_name, session_id)
 
     return response
+
+    def destroy_session(self, request=None) -> bool:
+        """Deletes the user session"""
+        if request is None:
+            return False
+
+        session_id = self.session_cookie(request)
+        if session_id is None:
+            return False
+
+        user_id = self.user_id_for_session_id(session_id)
+        if user_id is None:
+            return False
+
+        del self.user_id_by_session_id[session_id]
+        return True
